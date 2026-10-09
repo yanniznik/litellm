@@ -3381,35 +3381,35 @@ workflows:
       - using_litellm_on_windows:
           filters:
             branches:
-              only: main
+              only: /.*/
       - windows_release_wheel:
           filters:
             branches:
-              only: main
+              only: /.*/
       - provider_replay_harness:
           filters:
             branches:
-              only: main
+              only: /.*/
       - base_sdk_install:
           filters:
             branches:
-              only: main
+              only: /.*/
       - local_testing_part1:
           filters:
             branches:
-              only: main
+              only: /.*/
       - local_testing_part2:
           filters:
             branches:
-              only: main
+              only: /.*/
       - langfuse_logging_unit_tests:
           filters:
             branches:
-              only: main
+              only: /.*/
       - litellm_router_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - auth_ui_unit_tests
       - build_docker_database_image
       - e2e_ui_testing
@@ -3432,7 +3432,7 @@ workflows:
       - proxy_build_from_pip_tests:
           filters:
             branches:
-              only: main
+              only: /.*/
       - proxy_pass_through_endpoint_tests:
           requires:
             - build_docker_database_image
@@ -3442,52 +3442,52 @@ workflows:
       - llm_translation_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - realtime_translation_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - guardrails_testing
       - google_generate_content_endpoint_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - ocr_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - search_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - batches_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - litellm_utils_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - pass_through_unit_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - image_gen_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - logging_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - audio_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
       - upload-coverage:
           filters:
             branches:
-              only: main
+              only: /.*/
           requires:
             - realtime_translation_testing
             - google_generate_content_endpoint_testing
@@ -3508,24 +3508,24 @@ workflows:
       - installing_litellm_on_python:
           filters:
             branches:
-              only: main
+              only: /.*/
       - installing_litellm_on_python_3_13:
           filters:
             branches:
-              only: main
+              only: /.*/
       - installing_litellm_on_python_v2_migration_resolver:
           filters:
             branches:
-              only: main
+              only: /.*/
       - helm_chart_testing:
           filters:
             branches:
-              only: main
+              only: /.*/
           requires:
             - build_docker_database_image
       - test_bad_database_url:
           filters:
             branches:
-              only: main
+              only: /.*/
           requires:
             - build_docker_database_image
