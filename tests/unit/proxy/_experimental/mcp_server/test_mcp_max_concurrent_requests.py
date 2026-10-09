@@ -5,6 +5,7 @@ import pytest
 from mcp.types import CallToolResult, TextContent
 from unittest.mock import patch
 
+from litellm.experimental_mcp_client.client import PersistentMCPSession
 from litellm.proxy._experimental.mcp_server.mcp_server_manager import MCPServerManager
 from litellm.types.mcp import MCPAuth, MCPTransport
 from litellm.types.mcp_server.mcp_server_manager import MCPServer
@@ -47,7 +48,13 @@ def _make_server(server_id: str, max_concurrent_requests: Optional[int]) -> MCPS
 def _patch_client_with_tracker(manager: MCPServerManager, tracker: _ConcurrencyTracker):
     async def fake_create_mcp_client(server, **kwargs):
         class _ProbeClient:
-            async def call_tool(self, params, host_progress_callback=None, allow_input_required=False):
+            async def call_tool(
+                self,
+                params,
+                host_progress_callback=None,
+                allow_input_required=False,
+                persistent_session: PersistentMCPSession | None = None,
+            ):
                 tracker.enter(server.server_id)
                 try:
                     await asyncio.sleep(HOLD_SECONDS)
