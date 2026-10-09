@@ -2,6 +2,8 @@ from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, Final
 
 import httpx
+from pydantic import ConfigDict, TypeAdapter, with_config
+from typing_extensions import NotRequired, ReadOnly, TypedDict
 
 from litellm.llms.base_llm.vector_store.transformation import BaseVectorStoreConfig
 from litellm.secret_managers.main import get_secret_str
@@ -20,6 +22,21 @@ if TYPE_CHECKING:
     from litellm.litellm_core_utils.litellm_logging import Logging as LiteLLMLoggingObj
 else:
     LiteLLMLoggingObj = Any
+
+
+@with_config(ConfigDict(extra="allow", strict=True))
+class _RAGFlowDataset(TypedDict):
+    id: ReadOnly[NotRequired[str]]
+    name: ReadOnly[NotRequired[str | None]]
+    create_time: ReadOnly[NotRequired[int | float]]
+
+
+@with_config(ConfigDict(extra="allow", strict=True))
+class _RAGFlowCreateResponse(TypedDict):
+    data: ReadOnly[NotRequired[_RAGFlowDataset]]
+
+
+_RAGFLOW_CREATE_RESPONSE: Final = TypeAdapter(_RAGFlowCreateResponse)
 
 
 class RAGFlowVectorStoreConfig(BaseVectorStoreConfig):
@@ -185,7 +202,7 @@ class RAGFlowVectorStoreConfig(BaseVectorStoreConfig):
                     headers=response.headers,
                 )
 
-            data: Final = response_json.get("data", {})
+            data: Final = _RAGFLOW_CREATE_RESPONSE.validate_python(response_json).get("data", {})
 
             # Extract dataset ID
             dataset_id: Final = data.get("id")
