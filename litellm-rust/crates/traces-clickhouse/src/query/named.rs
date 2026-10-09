@@ -117,6 +117,12 @@ struct TraceSpansRowEncoding {
     pub input_tokens: u32,
     #[serde(deserialize_with = "super::number::deserialize")]
     pub output_tokens: u32,
+    #[serde(default)]
+    pub pricing_attributes: std::collections::BTreeMap<String, String>,
+    #[serde(default)]
+    pub gen_ai_response_id: String,
+    #[serde(default)]
+    pub openinference_output: Option<String>,
     pub litellm_request_id: String,
     #[serde(default)]
     pub call_keys: Vec<litellm_traces::CallKey>,
